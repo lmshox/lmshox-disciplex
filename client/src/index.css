@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --color-ink: #000000;
+  --color-line: #1c1c1c;
+  --color-line-strong: #2e2e2e;
+  --color-muted: #8a8a8a;
+  --color-alert: #ff2d2d;   /* failures, lockout */
+  --color-warn: #ffb800;    /* deadline approaching */
+  --color-ok: #00e676;      /* done */
+}
+
+@layer base {
+  html { background: #000; color-scheme: dark; -webkit-tap-highlight-color: transparent; }
+  body { min-height: 100dvh; font-feature-settings: "tnum" 1; }
+  :focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+}
+
+@utility label { @apply text-[10px] font-semibold uppercase tracking-[0.18em] text-muted; }
+@utility field {
+  @apply w-full rounded-none border border-line-strong bg-ink px-3 py-2.5 text-sm text-white placeholder:text-neutral-600
+    transition-colors focus:border-white focus:outline-none disabled:opacity-40;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.14em]
+    transition-colors disabled:cursor-not-allowed disabled:opacity-40;
+}
+@utility btn-primary { @apply btn bg-white text-black hover:bg-neutral-200; }
+@utility btn-ghost { @apply btn border border-line-strong text-white hover:border-white; }
+@utility btn-danger { @apply btn bg-alert text-black hover:brightness-110; }
+
+
+@utility pt-safe { padding-top: max(env(safe-area-inset-top), 0px); }
+@utility pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+
+@keyframes pulse-alert { 50% { opacity: 0.35; } }
+.animate-alert { animation: pulse-alert 1.2s steps(2, jump-none) infinite; }
+@media (prefers-reduced-motion: reduce) { .animate-alert { animation: none; } }
